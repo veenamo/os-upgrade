@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+        </li>
+        <li>
+          <a class="nav-link" [routerLink]="['/os-upgrade']">OS Upgrade</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
+</div>
