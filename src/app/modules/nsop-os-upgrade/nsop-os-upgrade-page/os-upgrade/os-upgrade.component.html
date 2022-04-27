@@ -37,7 +37,11 @@
 
   <ng-container matColumnDef="operations">
     <th mat-header-cell *matHeaderCellDef>Operations</th>
-    <td mat-cell *matCellDef="let element">{{ element.operations }}</td>
+    <td mat-cell *matCellDef="let element">
+      <a aria-current="page" href="edit"> {{ element.operations }}</a>
+
+      <a aria-current="page" href="edit"> remove </a>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="details">
