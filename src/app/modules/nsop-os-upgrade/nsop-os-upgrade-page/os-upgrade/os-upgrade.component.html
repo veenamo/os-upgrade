@@ -13,20 +13,235 @@
   </div>
 </div> -->
 
+<div class="header_name">
+  <label>OS upgrade Administration</label>
+</div>
 <div class="demo-button-container">
   <button
     [ngClass]="{ black: !toggle }"
     mat-raised-button
-    (click)="addData()"
+    (click)="addData(mymodal)"
     class="demo-button"
   >
-    Add data
+    Add OS
   </button>
 </div>
 
+<!-- <div *ngIf="!toggle"><app-add-project-details [data]="addDetail"></app-add-project-details></div> -->
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header" style="display: flex; justify-content: right">
+    <!-- <h4 class="modal-title" id="modal-basic-title">Add Project</h4> -->
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <div class="col-sm-6">
+          <label for="platform">Platform Details</label>
+
+          <select formControlName="platform" class="form-control">
+            <option *ngFor="let state of states" [value]="state">
+              {{ state }}
+            </option>
+          </select>
+        </div>
+        <div><label for="osVersion">Enter OS Version</label></div>
+        <div class="col-sm-3">
+          <input
+            id="osVersion"
+            type="text"
+            formControlName="osVersion"
+            autocomplete="off"
+          />
+        </div>
+        <div class="col-sm-12">
+          <div class="col-sm-4" style="display: inline-block">
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="pickerendOfLife"
+                formControlName="endOfLife"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerendOfLife"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickerendOfLife></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4" style="display: inline-block">
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="pickerendOfSupport"
+                formControlName="endOfSupport"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerendOfSupport"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickerendOfSupport></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4" style="display: inline-block">
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="pickerendOfSale"
+                formControlName="endOfSale"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerendOfSale"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickerendOfSale></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="col-sm-3" style="display: inline-block">
+            <div><label for="minCpu">Min CPU</label></div>
+            <div>
+              <input
+                id="minCpu"
+                type="text"
+                formControlName="minCpu"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div
+            class="col-sm-3"
+            style="display: inline-block; padding-left: 8px"
+          >
+            <div><label for="minRam">Min RAM</label></div>
+            <div>
+              <input
+                id="minRam"
+                type="text"
+                formControlName="minRam"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div
+            class="col-sm-3"
+            style="display: inline-block; padding-left: 16px"
+          >
+            <div><label for="minDiskSpace">Min Disk Space</label></div>
+            <div>
+              <input
+                id="minDiskSpace"
+                type="text"
+                formControlName="minDiskSpace"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div
+            class="col-sm-3"
+            style="display: inline-block; padding-left: 30px"
+          >
+            <button type="button" (click)="addOsTemporarily()">
+              <span aria-hidden="true">ADD OS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <button type="submit">bbb</button> -->
+    </form>
+
+    <table
+      mat-table
+      #mymodalm
+      *ngIf="dataPopUpAdd.length"
+      [dataSource]="dataPopUpAdd"
+      class="mat-elevation-z8 demo-table"
+    >
+      <ng-container matColumnDef="popUposVersion">
+        <th mat-header-cell *matHeaderCellDef>OSVersion</th>
+        <td mat-cell *matCellDef="let element">{{ element.osVersion }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpEndofLife">
+        <th mat-header-cell *matHeaderCellDef>EOL</th>
+        <td mat-cell *matCellDef="let element">{{ element.endOfLife }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpEndofSupport">
+        <th mat-header-cell *matHeaderCellDef>EOS</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.endOfSupport }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpEndofSale">
+        <th mat-header-cell *matHeaderCellDef>EOS</th>
+        <td mat-cell *matCellDef="let element">{{ element.endOfSale }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpMinCpu">
+        <th mat-header-cell *matHeaderCellDef>Min Cpu</th>
+        <td mat-cell *matCellDef="let element">{{ element.minCpu }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpMinRam">
+        <th mat-header-cell *matHeaderCellDef>Min RAM</th>
+        <td mat-cell *matCellDef="let element">{{ element.minRam }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpMinSpace">
+        <th mat-header-cell *matHeaderCellDef>Min Space</th>
+        <td mat-cell *matCellDef="let element">{{ element.minDiskSpace }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpoperations">
+        <th mat-header-cell *matHeaderCellDef>Operations</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <a
+            aria-current="page"
+            (click)="popUpEdit('popUpEdit')"
+            href="javascript:void(0)"
+          >
+            Edit</a
+          >
+
+          <a
+            aria-current="page"
+            (click)="popUpRemove('popUpRemove', i, mymodalm)"
+            href="javascript:void(0)"
+          >
+            Remove
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedPopUpColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedPopUpColumns"></tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" (click)="submit()" class="btn btn-outline-dark">
+      submit
+    </button>
+  </div>
+</ng-template>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container matColumnDef="osVersion">
-    <th mat-header-cell *matHeaderCellDef>OSVersion</th>
+    <th mat-header-cell *matHeaderCellDef>OS Version</th>
     <td mat-cell *matCellDef="let element">{{ element.osVersion }}</td>
   </ng-container>
 
@@ -52,3 +267,13 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+<div *ngIf="!dataSource.length">
+  <div class="no_platform">
+    <div><span>NO PLATFORMS TO DISPLAY</span></div>
+  </div>
+  <div class="no_platform_link">
+    <a href="javascript:void(0)" (click)="addData(mymodal)"
+      >click here to start adding the platform</a
+    >
+  </div>
+</div>
