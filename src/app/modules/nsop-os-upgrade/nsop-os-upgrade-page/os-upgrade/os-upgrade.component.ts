@@ -130,6 +130,7 @@ export class OsUpgradeComponent implements OnInit {
     console.log('vvvvvvvv', this.form);
 
     this.dataPopUpAdd = [this.form.value, ...this.dataPopUpAdd];
+    this.form.reset();
   }
 
   addData(content: any) {
@@ -172,8 +173,17 @@ export class OsUpgradeComponent implements OnInit {
     }
   }
 
-  popUpEdit(action: string) {
-    console.log(console.log('nnnnnnnn', action));
+  popUpEdit(action: string, ele) {
+    this.form.setValue({
+      platform: ele.platform,
+      osVersion: ele.osVersion,
+      endOfLife: ele.endOfLife,
+      endOfSupport: ele.endOfSale,
+      endOfSale: ele.endOfSale,
+      minCpu: ele.minCpu,
+      minRam: ele.minRam,
+      minDiskSpace: ele.minDiskSpace,
+    });
   }
 
   submit() {
@@ -182,6 +192,7 @@ export class OsUpgradeComponent implements OnInit {
     this.modalService.dismissAll('Cross click');
     this.dataPopUpAdd = [];
   }
+
   ngOnInit(): void {
     this.dataSource = this.dataToDisplay;
   }
