@@ -1,0 +1,499 @@
+<!-- <div class="container">
+  <div class="row">
+    <div>
+      <button
+        [ngClass]="{ black: !toggle }"
+        class="btn btn-outline-dark"
+        type="button"
+        (click)="enableDisableRule()"
+      >
+        Add OS
+      </button>
+    </div>
+  </div>
+</div> -->
+
+<br />
+<div class="demo-button-container">
+  <button
+    [ngClass]="{ black: !toggle }"
+    mat-raised-button
+    (click)="addData()"
+    class="demo-button"
+  >
+    Add Project
+  </button>
+</div>
+
+<!-- <div *ngIf="!toggle"><app-add-project-details [data]="addDetail"></app-add-project-details></div> -->
+
+<ng-template #mymodal let-modal>
+  <!-- <div class="modal-header" style="display: flex; justify-content: right">
+    
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </div> -->
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <div>
+          <label class="label_bold">Add Project Details</label>
+        </div>
+        <br />
+        <div class="col-sm-12">
+          <div>
+            <label class="label_bold" for="projectName"> Project Name</label>
+          </div>
+          <div class="col-sm-6">
+            <input
+              id="projectName"
+              type="text"
+              placeholder="Enter project name "
+              formControlName="projectName"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+        <br />
+
+        <div class="col-sm-9">
+          <div class="col-sm-6" style="display: inline-block">
+            <div>
+              <label class="label_bold" for="hostName"> Host Name</label>
+            </div>
+            <div>
+              <input
+                id="hostName"
+                type="text"
+                placeholder="Enter Device ID/IP "
+                formControlName="hostName"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div
+            class="col-sm-3"
+            style="display: inline-block; padding-left: 2px"
+          >
+            <button type="button" (click)="addOsTemporarily()">
+              <span aria-hidden="true">Search</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="col-sm-4" style="display: inline-block">
+            <div>
+              <mat-form-field>
+                <label class="label_bold padding-btm" for="vendor"
+                  >Vendor</label
+                >
+
+                <mat-select formControlName="vendor" class="form-control">
+                  <mat-option
+                    *ngFor="let vendorValue of vendorList"
+                    [value]="vendorValue"
+                    >{{ vendorValue }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: inline-block">
+            <div>
+              <mat-form-field>
+                <label class="label_bold padding-btm" for="currentOsVersion"
+                  >Current OS version</label
+                >
+                <mat-select
+                  formControlName="currentOsVersion"
+                  class="form-control"
+                >
+                  <mat-option
+                    *ngFor="let currentOsVersionValue of currentOsVersionList"
+                    [value]="currentOsVersionValue"
+                    >{{ currentOsVersionValue }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: inline-block">
+            <div>
+              <mat-form-field>
+                <label class="label_bold padding-btm" for="nextOsVersion"
+                  >Next OS version</label
+                >
+                <mat-select
+                  formControlName="nextOsVersion"
+                  class="form-control"
+                >
+                  <mat-option
+                    *ngFor="let nextOsVersionValue of nextOsVersionList"
+                    [value]="nextOsVersionValue"
+                    >{{ nextOsVersionValue }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="col-sm-4" style="display: inline-block">
+            <div>
+              <mat-form-field>
+                <label class="label_bold padding-btm" for="location"
+                  >Location</label
+                >
+                <mat-select formControlName="location" class="form-control">
+                  <mat-option
+                    *ngFor="let locationValue of locationList"
+                    [value]="locationValue"
+                    >{{ locationValue }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: inline-block">
+            <div>
+              <mat-form-field>
+                <label class="label_bold padding-btm" for="region"
+                  >Region</label
+                >
+                <mat-select formControlName="region" class="form-control">
+                  <mat-option
+                    *ngFor="let regionValue of regionList"
+                    [value]="regionValue"
+                    >{{ regionValue }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <br />
+        <!-- <div>
+            <label class="label_bold" for="location">Location</label>
+          </div> -->
+        <!-- <div class="col-sm-6">
+            <input
+              id="location"
+              type="text"
+              placeholder="select Location"
+              formControlName="location"
+              autocomplete="off"
+            />
+          </div> -->
+
+        <!-- <div class="col-sm-12">
+          <div>
+            <label class="label_bold" for="region">Region</label>
+          </div>
+          <div class="col-sm-6">
+            <input
+              id="region"
+              type="text"
+              placeholder="select Region"
+              formControlName="region"
+              autocomplete="off"
+            />
+          </div>
+        </div> -->
+
+        <div class="col-sm-12">
+          <div class="col-sm-9" style="display: inline-block">
+            <div>
+              <label class="label_bold"
+                >Minimal Vendor specification Details</label
+              >
+            </div>
+            <div><span>A) 2 GB Page Memory</span></div>
+            <div><span>B) 500MB Cache</span></div>
+            <div><span>c) 30 GB Free Disk Space</span></div>
+          </div>
+          <div
+            class="col-sm-3"
+            style="display: inline-block; padding-left: 30px"
+          >
+            <button type="button" (click)="addOsTemporarily()">
+              <span aria-hidden="true">ADD OS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <br />
+    <table
+      mat-table
+      #mymodalChild
+      *ngIf="dataPopUpAdd.length"
+      [dataSource]="dataPopUpAdd"
+      class="mat-elevation-z8 demo-table"
+    >
+      <ng-container matColumnDef="popUpProjectName">
+        <th mat-header-cell *matHeaderCellDef>Project Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.projectName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpHostName">
+        <th mat-header-cell *matHeaderCellDef>Host Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hostName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpCurrentOsVersion">
+        <th mat-header-cell *matHeaderCellDef>Current OS Version</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.currentOsVersion }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpNextOsVersion">
+        <th mat-header-cell *matHeaderCellDef>Next OS Version</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.nextOsVersion }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpRegion">
+        <th mat-header-cell *matHeaderCellDef>Region</th>
+        <td mat-cell *matCellDef="let element">{{ element.region }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpLocation">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="popUpoperations">
+        <th mat-header-cell *matHeaderCellDef>Operations</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <a
+            aria-current="page"
+            (click)="popUpEdit('popUpEdit', element)"
+            href="javascript:void(0)"
+          >
+            Edit</a
+          >
+
+          <a
+            style="padding-left: 5px"
+            aria-current="page"
+            (click)="popUpRemove('popUpRemove', i, mymodalChild)"
+            href="javascript:void(0)"
+          >
+            Remove
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedPopUpColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedPopUpColumns"></tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" (click)="submit()" class="btn btn-outline-dark">
+      submit
+    </button>
+  </div>
+</ng-template>
+
+<table
+  #mymodalParent
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8 demo-table"
+>
+  <ng-container matColumnDef="projectName">
+    <th mat-header-cell *matHeaderCellDef>Project Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.projectName }}</td>
+  </ng-container>
+  <ng-container matColumnDef="deviceType">
+    <th mat-header-cell *matHeaderCellDef>device Type</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.deviceType }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deviceCount">
+    <th mat-header-cell *matHeaderCellDef>Number of Device</th>
+    <td mat-cell *matCellDef="let element">{{ element.deviceCount }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="projectStatus">
+    <th mat-header-cell *matHeaderCellDef>Project status</th>
+    <td mat-cell *matCellDef="let element">
+      <span
+        >Validation Checks
+        <i
+          [ngClass]="[
+            element.status.validationChecks === 1
+              ? 'green-color fa-solid fa-circle-check'
+              : '',
+            element.status.validationChecks === 2
+              ? 'red-color fa-solid fa-circle-xmark'
+              : ''
+          ]"
+        ></i
+      ></span>
+      <br />
+      <span
+        >Create Changes
+        <i
+          style="padding-left: 12px"
+          [ngClass]="[
+            element.status.createChange === 1
+              ? 'green-color fa-solid fa-circle-check'
+              : '',
+            element.status.createChange === 2
+              ? 'red-color fa-solid fa-circle-xmark'
+              : ''
+          ]"
+        ></i
+      ></span>
+      <br />
+      <span
+        >Initiating Upgrade
+        <i
+          [ngClass]="[
+            element.status.initiatingUpgrade === 1
+              ? 'green-color fa-solid fa-circle-check'
+              : '',
+            element.status.initiatingUpgrade === 2
+              ? 'red-color fa-solid fa-circle-xmark'
+              : ''
+          ]"
+        ></i
+      ></span>
+      <br />
+      <span
+        >Finished Upgrade<i
+          style="padding-left: 5px"
+          [ngClass]="[
+            element.status.finishedUpgrade === 1
+              ? 'green-color fa-solid fa-circle-check'
+              : '',
+            element.status.finishedUpgrade === 2
+              ? 'red-color fa-solid fa-circle-xmark'
+              : ''
+          ]"
+        ></i>
+      </span>
+
+      <!-- <div class="col-sm-3" style="display: inline-block">
+        <i
+          [ngClass]="{
+            'green-color fa-solid fa-circle-check':
+              element.status.validationChecks === 1
+          }"
+        ></i>
+        <br />
+        <i
+          [ngClass]="{
+            'green-color fa-solid fa-circle-check':
+              element.status.createChange === 1
+          }"
+        ></i>
+        <br />
+        <i
+          [ngClass]="{
+            'green-color fa-solid fa-circle-check':
+              element.status.initiatingUpgrade === 1
+          }"
+        ></i>
+        <br />
+        <i
+          [ngClass]="{
+            'green-color fa-solid fa-circle-check':
+              element.status.finishedUpgrade === 1
+          }"
+        ></i>
+      </div> -->
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="operations">
+    <th mat-header-cell *matHeaderCellDef>Operations</th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <button
+        style="margin-right: 2%; font-size: 80%"
+        aria-current="page"
+        (click)="osUpgradeEdit('edit', element)"
+        href="javascript:void(0)"
+      >
+        Edit
+        <br />
+        Project
+      </button>
+
+      <button
+        style="margin-right: 2%; font-size: 80%"
+        aria-current="page"
+        (click)="osUpgradeRemove('remove', i, mymodalParent)"
+        href="javascript:void(0)"
+      >
+        Initiate <br />Checks
+      </button>
+
+      <button
+        style="font-size: 80%"
+        aria-current="page"
+        (click)="osUpgradeRemove('remove', i, mymodalParent)"
+        href="javascript:void(0)"
+      >
+        Create <br />
+        Changes
+      </button>
+
+      <a
+        style="padding-left: 5px"
+        aria-current="page"
+        (click)="osUpgradeRemove('remove', i, mymodalParent)"
+        href="javascript:void(0)"
+      >
+        Delete
+      </a>
+
+      <a
+        style="padding-left: 5px"
+        aria-current="page"
+        (click)="osUpgradeRemove('remove', i, mymodalParent)"
+        href="javascript:void(0)"
+      >
+        Pause
+      </a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastUpdateOn">
+    <th mat-header-cell *matHeaderCellDef>Last Updated On</th>
+    <td mat-cell *matCellDef="let element">{{ element.lastUpdateOn }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<div *ngIf="!dataSource.length">
+  <div class="no_platform">
+    <div><span>NO PLATFORMS TO DISPLAY</span></div>
+  </div>
+  <br />
+  <div class="no_platform_link">
+    <a href="javascript:void(0)" (click)="addData()"
+      >click here to start adding the platform</a
+    >
+  </div>
+</div>
