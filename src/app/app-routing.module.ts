@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './modules/nsop-os-upgrade/nsop-os-upgrade-page/home/home.component';
+import { OsUpgradeUserComponent } from './modules/nsop-os-upgrade/nsop-os-upgrade-page/os-upgrade-user/os-upgrade-user.component';
 
 const appRoutes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: OsUpgradeUserComponent,
   },
 ];
 

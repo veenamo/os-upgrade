@@ -13,17 +13,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { OsUpgradeComponent } from './nsop-os-upgrade-page/os-upgrade/os-upgrade.component';
 import { OsUpgradeRoutingModule } from './nsop-os-upgrade-routing.module';
-import { HomeComponent } from './nsop-os-upgrade-page/home/home.component';
-import { AddProjectDetailsComponent } from './nsop-os-upgrade-page/add-project-details/add-project-details.component';
 import { OsUpgradeUserComponent } from './nsop-os-upgrade-page/os-upgrade-user/os-upgrade-user.component';
 
 @NgModule({
-  declarations: [
-    OsUpgradeComponent,
-    HomeComponent,
-    AddProjectDetailsComponent,
-    OsUpgradeUserComponent,
-  ],
+  declarations: [OsUpgradeComponent, OsUpgradeUserComponent],
   exports: [OsUpgradeComponent],
   imports: [
     RouterModule,
