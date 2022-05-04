@@ -98,11 +98,11 @@ export class OsUpgradeUserComponent implements OnInit {
       hostName: 'MX400 router',
       operations: 'edit',
       details: 'H',
-      currentOsVersion: '23',
-      nextOsVersion: '44',
+      currentOsVersion: 'V1.0',
+      nextOsVersion: 'V2.0',
       vendor: '44',
-      region: '5gb',
-      location: '6gb',
+      region: 'b',
+      location: 'a',
       deviceType: 'MX',
       deviceCount: 10,
       status: {
@@ -119,11 +119,11 @@ export class OsUpgradeUserComponent implements OnInit {
       deviceCount: 10,
       operations: 'edit',
       details: 'Hecc',
-      currentOsVersion: '23',
-      nextOsVersion: '44',
+      currentOsVersion: 'V1.0',
+      nextOsVersion: 'V2.0',
       vendor: '44',
-      region: '5gb',
-      location: '6gb',
+      region: 'a',
+      location: 'b',
       status: {
         validationChecks: 2,
         createChange: 0,
@@ -138,11 +138,11 @@ export class OsUpgradeUserComponent implements OnInit {
       deviceCount: 10,
       operations: 'edit',
       details: 'Licc',
-      currentOsVersion: '23',
-      nextOsVersion: '44',
-      vendor: '44',
-      region: '5gb',
-      location: '6gb',
+      currentOsVersion: 'V1.0',
+      nextOsVersion: 'V2.0',
+      vendor: 'd',
+      region: 'd',
+      location: 'c',
       status: {
         validationChecks: 1,
         createChange: 0,
@@ -156,9 +156,9 @@ export class OsUpgradeUserComponent implements OnInit {
       hostName: 'MX400 router',
       operations: 'edit',
       details: 'Be',
-      currentOsVersion: '23',
-      nextOsVersion: '44',
-      vendor: '44',
+      currentOsVersion: 'V1.0',
+      nextOsVersion: 'V2.0',
+      vendor: 'c',
       region: '5gb',
       location: '6gb',
       deviceCount: 10,
@@ -176,11 +176,11 @@ export class OsUpgradeUserComponent implements OnInit {
       operations: 'edit',
       details: 'B',
       deviceCount: 10,
-      currentOsVersion: '23',
-      nextOsVersion: '44',
-      vendor: '44',
-      region: '5gb',
-      location: '6gb',
+      currentOsVersion: 'V1.0',
+      nextOsVersion: 'V2.0',
+      vendor: 'b',
+      region: 'e',
+      location: 'a',
       status: {
         validationChecks: 1,
         createChange: 1,
@@ -194,11 +194,11 @@ export class OsUpgradeUserComponent implements OnInit {
       deviceType: 'MX',
       operations: 'edit',
       details: 'C',
-      currentOsVersion: '23',
-      nextOsVersion: '44',
-      vendor: '44',
-      region: '5gb',
-      location: '6gb',
+      currentOsVersion: 'V1.0',
+      nextOsVersion: 'V2.0',
+      vendor: 'a',
+      region: 'a',
+      location: 'b',
       deviceCount: 10,
       status: {
         validationChecks: 1,
@@ -300,8 +300,6 @@ export class OsUpgradeUserComponent implements OnInit {
   // @ViewChild('mymodalParent', { static: false, read: ElementRef }) ;
 
   addOsTemporarily() {
-    console.log('vvvvvvvv', this.form);
-
     this.dataPopUpAdd = [this.form.value, ...this.dataPopUpAdd];
     this.length = this.dataPopUpAdd.length;
     this.form.reset();
@@ -316,23 +314,9 @@ export class OsUpgradeUserComponent implements OnInit {
       data: { name: 'this.name', animal: 'this.animal' },
     });
     this.form.reset();
-    //  this.dialog.open()
-    //     .open(this.dialogRef, {
-    //       ariaLabelledBy: 'modal-basic-title',
-    //       windowClass: 'modal-claass',
-    //       size: 'lg',
-    //     })
-    //     .result.then(
-    //       (result) => {
-    //         this.closeResult = `Closed with: ${result}`;
-    //       },
-    //       (reason) => {
-    //         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    //       }
-    //     );
   }
 
-  osUpgradeEdit(action, ele) {
+  osUpgradeUserEdit(action, ele) {
     this.form.setValue({
       projectName: ele.projectName,
       hostName: ele.hostName,
@@ -341,7 +325,6 @@ export class OsUpgradeUserComponent implements OnInit {
       vendor: ele.vendor,
       region: ele.region,
       location: ele.location,
-      minDiskSpace: ele.minDiskSpace,
     });
 
     this.toggle = false;
@@ -353,14 +336,19 @@ export class OsUpgradeUserComponent implements OnInit {
     });
   }
 
-  osUpgradeRemove(action, i, mymodalParent) {
+  osUpgradeUserRemove(action, i, mymodalParent) {
     let choice = confirm('Are you sure you want to delete?');
-    console.log('hhhhhhh', mymodalParent);
     if (i > -1) {
       this.dataSource.splice(i, 1);
       mymodalParent.renderRows();
     }
   }
+
+  osUpgradeUserInitiateChecks(action, i, mymodalParent) {}
+
+  osUpgradeUserCreateChange(action, i, mymodalParent) {}
+
+  osUpgradePause(action, i, mymodalParent) {}
 
   popUpRemove(action: string, index: number, mymodalChild) {
     let choice = confirm('Are you sure you want to delete?');
