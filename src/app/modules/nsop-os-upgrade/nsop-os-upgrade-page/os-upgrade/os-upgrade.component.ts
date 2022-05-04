@@ -1,8 +1,15 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTable } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface PeriodicElement {
   platform: string;
@@ -21,10 +28,14 @@ export interface PeriodicElement {
   styleUrls: ['./os-upgrade.component.css'],
 })
 export class OsUpgradeComponent implements OnInit {
-  @ViewChild('mymodal') maintable: MatTable<PeriodicElement>;
-  @ViewChild('mymodalm') childtable: MatTable<PeriodicElement>;
+  @ViewChild('mymodalParent') maintable: MatTable<PeriodicElement>;
+  @ViewChild('mymodalChild') childtable: MatTable<PeriodicElement>;
+  @ViewChild('mymodal')
+  dialogRef!: TemplateRef<any>;
 
-  constructor(private modalService: NgbModal) {}
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private modalService: NgbModal, public dialog: MatDialog) {}
 
   closeResult: string = '';
   toggle = true;
@@ -42,134 +53,224 @@ export class OsUpgradeComponent implements OnInit {
   ];
   displayedColumns: string[] = [
     'osVersion',
-    'platformName',
+    'platform',
     'operations',
     'details',
   ];
 
-  states: string[] = ['a', 'b', 'c'];
+  platformList: string[] = ['a', 'b', 'c', 'e', 'f', 'g', 'h'];
+  length: number = 0;
+  resultsLength: number = 0;
 
-  // dataToDisplay = [];
-  dataToDisplay = [
-    {
-      osVersion: 'v 1',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'H',
-    },
-    {
-      osVersion: 'v 2',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'Hecc',
-    },
-    {
-      osVersion: 'v 3',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'Licc',
-    },
-    {
-      osVersion: 'v 4',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'Be',
-    },
-    {
-      osVersion: 'v 5',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'B',
-    },
-    {
-      osVersion: 'v 6',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'C',
-    },
-    {
-      osVersion: 'v 7',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'N',
-    },
-    {
-      osVersion: 'v 8',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'O',
-    },
-    {
-      osVersion: 'v 9',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'F',
-    },
-    {
-      osVersion: 'v 10',
-      platformName: 'MX400 router',
-      operations: 'edit',
-      details: 'Ne',
-    },
-  ];
+  dataToDisplay = [];
+  // dataToDisplay = [
+  //   {
+  //     osVersion: 'v 1',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'H',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 2',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'Hecc',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 3',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'Licc',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 4',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'Be',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 5',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'B',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 6',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'C',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 7',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details:
+  //       ' dvcgsdfvhjbdshfvdbsfvhbfvshbfvsdhfvbsdfvhsdfbvhdhfhbvsdfvbsdfhbdshf dvcgsdfvhjbdshfvdbsfvhbfvshbfvsdhfvbsdfvhsdfbvhdhfhbvsdfvbsdfhbdshf dvcgsdfvhjbdshfvdbsfvhbfvshbfvsdhfvbsdfvhsdfbvhdhfhbvsdfvbsdfhbdshf',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 8',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'O',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 9',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'F',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  //   {
+  //     osVersion: 'v 10',
+  //     platform: 'MX400 router',
+  //     operations: 'edit',
+  //     details: 'Ne',
+  //     endOfLife: '23',
+  //     endOfSupport: '44',
+  //     endOfSale: '44',
+  //     minCpu: '5gb',
+  //     minRam: '6gb',
+  //     minDiskSpace: '7gb',
+  //   },
+  // ];
 
   form = new FormGroup({
     platform: new FormControl('', Validators.required),
-    osVersion: new FormControl(''),
-    endOfLife: new FormControl(),
-    endOfSupport: new FormControl(),
-    endOfSale: new FormControl(),
+    osVersion: new FormControl('', Validators.required),
+    endOfLife: new FormControl(new Date(), Validators.required),
+    endOfSupport: new FormControl(new Date(), Validators.required),
+    endOfSale: new FormControl(new Date(), Validators.required),
     minCpu: new FormControl('', Validators.required),
     minRam: new FormControl('', Validators.required),
     minDiskSpace: new FormControl('', Validators.required),
   });
 
-  @ViewChild('mymodalm', { static: false, read: ElementRef }) inRef;
+  @ViewChild('mymodalChild', { static: false, read: ElementRef }) inRef;
+  // @ViewChild('mymodalParent', { static: false, read: ElementRef }) ;
 
   addOsTemporarily() {
     console.log('vvvvvvvv', this.form);
 
     this.dataPopUpAdd = [this.form.value, ...this.dataPopUpAdd];
+    this.length = this.dataPopUpAdd.length;
     this.form.reset();
   }
 
-  addData(content: any) {
+  addData() {
     this.toggle = false;
 
-    this.modalService
-      .open(content, {
-        ariaLabelledBy: 'modal-basic-title',
-        windowClass: 'modal-claass',
-        size: 'lg',
-      })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    const dialogRef = this.dialog.open(this.dialogRef, {
+      width: '850px',
+      height: '500px',
+      data: { name: 'this.name', animal: 'this.animal' },
+    });
+    this.form.reset();
+    //  this.dialog.open()
+    //     .open(this.dialogRef, {
+    //       ariaLabelledBy: 'modal-basic-title',
+    //       windowClass: 'modal-claass',
+    //       size: 'lg',
+    //     })
+    //     .result.then(
+    //       (result) => {
+    //         this.closeResult = `Closed with: ${result}`;
+    //       },
+    //       (reason) => {
+    //         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    //       }
+    //     );
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      this.toggle = true;
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      this.toggle = true;
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+  osUpgradeEdit(action, ele) {
+    console.log('ediiiiiiiiiiii', ele);
+    this.form.setValue({
+      platform: ele.platform,
+      osVersion: ele.osVersion,
+      endOfLife: ele.endOfLife,
+      endOfSupport: ele.endOfSale,
+      endOfSale: ele.endOfSale,
+      minCpu: ele.minCpu,
+      minRam: ele.minRam,
+      minDiskSpace: ele.minDiskSpace,
+    });
+
+    this.toggle = false;
+
+    const dialogRef = this.dialog.open(this.dialogRef, {
+      width: '850px',
+      height: '500px',
+      data: { name: 'this.name', animal: 'this.animal' },
+    });
+  }
+
+  osUpgradeRemove(action, i, mymodalParent) {
+    let choice = confirm('Are you sure you want to delete?');
+    console.log('hhhhhhh', mymodalParent);
+    if (i > -1) {
+      this.dataSource.splice(i, 1);
+      mymodalParent.renderRows();
     }
   }
 
-  popUpRemove(action: string, index: number, mymodalm) {
+  popUpRemove(action: string, index: number, mymodalChild) {
     let choice = confirm('Are you sure you want to delete?');
-    console.log('nnnnnnnn', mymodalm);
+
     if (index > -1) {
       this.dataPopUpAdd.splice(index, 1);
-      mymodalm.renderRows();
+      mymodalChild.renderRows();
     }
   }
 
@@ -186,14 +287,28 @@ export class OsUpgradeComponent implements OnInit {
     });
   }
 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      this.toggle = true;
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      this.toggle = true;
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
   submit() {
     console.log(this.dataPopUpAdd);
     this.dataSource = [...this.dataPopUpAdd, ...this.dataSource];
-    this.modalService.dismissAll('Cross click');
+    this.dialog.closeAll();
+    //this.dialog.dismissAll('Cross click');
     this.dataPopUpAdd = [];
   }
 
   ngOnInit(): void {
     this.dataSource = this.dataToDisplay;
+    this.resultsLength = this.dataToDisplay.length;
   }
 }

@@ -4,9 +4,30 @@
   border: 2px solid #f44336;
 } */
 
+.mat-column-osVersion {
+  flex: none;
+  width: 20%;
+}
+.mat-column-platform {
+  flex: none;
+  width: 20%;
+}
+
+.mat-column-operations {
+  flex: none;
+  width: 20%;
+}
+.mat-column-details {
+  flex: none;
+  width: 40%;
+}
+
 .header_name {
   padding-top: 25px;
   padding-bottom: 25px;
+  font-weight: bold;
+}
+.label_bold {
   font-weight: bold;
 }
 .no_platform_link {
@@ -15,7 +36,9 @@
   justify-content: center;
   opacity: 0.6;
 }
-
+.padding-btm {
+  padding-bottom: 5px;
+}
 .modal-claass > .modal-dialog {
   max-width: 75% !important;
   width: 95% !important;

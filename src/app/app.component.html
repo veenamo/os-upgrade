@@ -7,10 +7,17 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link" aria-current="page" routerLink="/">Home</a>
+          <a
+            class="nav-link"
+            aria-current="page"
+            [routerLink]="['/os-upgrade-user']"
+            >OS Upgrade User</a
+          >
         </li>
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [routerLink]="['/os-upgrade']">OS Upgrade</a>
+          <a class="nav-link" [routerLink]="['/os-upgrade']"
+            >OS Upgrade Administrator</a
+          >
         </li>
       </ul>
     </div>
