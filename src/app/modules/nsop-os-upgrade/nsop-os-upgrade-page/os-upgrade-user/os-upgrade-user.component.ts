@@ -294,12 +294,20 @@ export class OsUpgradeUserComponent implements OnInit {
     vendor: new FormControl(new Date(), Validators.required),
     region: new FormControl('', Validators.required),
     location: new FormControl('', Validators.required),
+
+    status: new FormGroup({
+      validationChecks: new FormControl(0),
+      createChange: new FormControl(0),
+      initiatingUpgrade: new FormControl(0),
+      finishedUpgrade: new FormControl(0),
+    }),
   });
 
   @ViewChild('mymodalChild', { static: false, read: ElementRef }) inRef;
   // @ViewChild('mymodalParent', { static: false, read: ElementRef }) ;
 
   addOsTemporarily() {
+    console.log(this.form);
     this.dataPopUpAdd = [this.form.value, ...this.dataPopUpAdd];
     this.length = this.dataPopUpAdd.length;
     this.form.reset();
@@ -384,8 +392,9 @@ export class OsUpgradeUserComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.dataPopUpAdd);
-    //this.dataSource = [...this.dataPopUpAdd, ...this.dataSource];
+    console.log('this.dataPopUpAdd', this.dataPopUpAdd);
+    this.dataSource = [...this.dataPopUpAdd, ...this.dataSource];
+
     this.dialog.closeAll();
     this.dataPopUpAdd = [];
   }

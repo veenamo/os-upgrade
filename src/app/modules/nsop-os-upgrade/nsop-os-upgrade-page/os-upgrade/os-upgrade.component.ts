@@ -199,7 +199,6 @@ export class OsUpgradeComponent implements OnInit {
   });
 
   @ViewChild('mymodalChild', { static: false, read: ElementRef }) inRef;
-  // @ViewChild('mymodalParent', { static: false, read: ElementRef }) ;
 
   addOsTemporarily() {
     console.log('vvvvvvvv', this.form);
@@ -218,20 +217,6 @@ export class OsUpgradeComponent implements OnInit {
       data: { name: 'this.name', animal: 'this.animal' },
     });
     this.form.reset();
-    //  this.dialog.open()
-    //     .open(this.dialogRef, {
-    //       ariaLabelledBy: 'modal-basic-title',
-    //       windowClass: 'modal-claass',
-    //       size: 'lg',
-    //     })
-    //     .result.then(
-    //       (result) => {
-    //         this.closeResult = `Closed with: ${result}`;
-    //       },
-    //       (reason) => {
-    //         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    //       }
-    //     );
   }
 
   osUpgradeEdit(action, ele) {
@@ -303,7 +288,6 @@ export class OsUpgradeComponent implements OnInit {
     console.log(this.dataPopUpAdd);
     this.dataSource = [...this.dataPopUpAdd, ...this.dataSource];
     this.dialog.closeAll();
-    //this.dialog.dismissAll('Cross click');
     this.dataPopUpAdd = [];
   }
 

@@ -195,7 +195,11 @@
             class="col-sm-3"
             style="display: inline-block; padding-left: 30px"
           >
-            <button type="button" (click)="addOsTemporarily()">
+            <button
+              type="button"
+              (click)="addOsTemporarily()"
+              [disabled]="!form.valid"
+            >
               <span aria-hidden="true">ADD OS</span>
             </button>
           </div>
@@ -279,7 +283,12 @@
     </table>
   </div>
   <div class="modal-footer">
-    <button type="submit" (click)="submit()" class="btn btn-outline-dark">
+    <button
+      type="submit"
+      [disabled]="!this.dataPopUpAdd.length"
+      (click)="submit()"
+      class="btn btn-outline-dark"
+    >
       submit
     </button>
   </div>
