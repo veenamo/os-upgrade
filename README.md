@@ -1,5 +1,11 @@
-<img width="939" alt="28-04" src="https://user-images.githubusercontent.com/24728013/165689681-d5864ffb-39c5-46a5-8bac-35fd72f9c631.PNG">
-<img width="917" alt="27-04" src="https://user-images.githubusercontent.com/24728013/165574178-0cf596f3-9c44-479b-a9eb-8dbac383e527.PNG">
+<img width="902" alt="add-1" src="https://user-images.githubusercontent.com/24728013/166724147-f4a4013e-e931-4f84-aafc-7e3251fcccef.PNG">
+<img width="948" alt="add-2" src="https://user-images.githubusercontent.com/24728013/166724154-6c32f505-0d37-4098-b372-cce5ba3ebfd4.PNG">
+<img width="786" alt="add-3" src="https://user-images.githubusercontent.com/24728013/166724157-33f30995-5ee7-45a7-9763-056e73fc13a2.PNG">
+<img width="889" alt="add-4" src="https://user-images.githubusercontent.com/24728013/166724159-c6ed7747-cbdd-48ca-af3f-6497421c67b1.PNG">
+<img width="924" alt="add-5" src="https://user-images.githubusercontent.com/24728013/166724163-5ca42d82-0dfc-41ae-8e0f-3676bd740521.PNG">
+<img width="902" alt="add-6" src="https://user-images.githubusercontent.com/24728013/166724164-90681061-1a73-4b2c-9990-ab6c59a11de0.PNG">
+<img width="947" alt="add-no-data" src="https://user-images.githubusercontent.com/24728013/166724166-18d30b6a-ba2e-4efe-9c92-efbc43579aed.PNG">
+
 # UpgradeOsNsop
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
